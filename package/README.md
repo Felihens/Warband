@@ -38,6 +38,8 @@ A party for you and your friends. Invite them, and you see each other's health, 
 
 **r2modman / Thunderstore Mod Manager:** click *Install*. To install a downloaded zip, go to Settings → *Import local mod*.
 
+**Nexus Mods / Vortex:** also on [Nexus Mods](https://www.nexusmods.com/valheim/mods/4900) (named **Shieldmates** there).
+
 **Manual:**
 1. Extract the zip.
 2. Copy the `plugins/Warband` folder into `Valheim/BepInEx/plugins/`.
@@ -115,6 +117,8 @@ Uma party para você e seus amigos. Convide-os e vocês veem a vida, a stamina, 
 ### Instalação
 
 **r2modman / Thunderstore Mod Manager:** clique em *Install*. Para instalar um zip baixado, vá em Settings → *Import local mod*.
+
+**Nexus Mods / Vortex:** também está no [Nexus Mods](https://www.nexusmods.com/valheim/mods/4900) (lá ele se chama **Shieldmates**).
 
 **Manual:**
 1. Extraia o zip.
