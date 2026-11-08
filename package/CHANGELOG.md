@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+- Find your party on the map: a "Find party" button on the large map. Click it and the map zooms out, glides to an ally and zooms back in, with a ring and their name in the middle. Each click goes to the next ally. Works even when the ally hides from the map. Options in `7 - Map`.
+- Encontre a party no mapa: um botão "Find party" no mapa grande. Clique e o mapa se afasta, desliza até um aliado e aproxima de novo, com um anel e o nome dele no meio. Cada clique vai para o próximo aliado. Funciona mesmo se o aliado estiver escondido no mapa. Opções em `7 - Map`.
+
 ## 1.0.2
 - Party chat: type `/p message` (or `/party message`) in the chat to talk only to your party. It shows with a [Party] tag and the sender's colour, and for a few seconds under their part of the party HUD. Options in `6 - Chat`.
 - Chat de party: digite `/p mensagem` (ou `/party mensagem`) no chat para falar só com a party. Aparece com a tag [Party] e a cor de quem falou, e por alguns segundos embaixo do bloco dele no HUD da party. Opções em `6 - Chat`.

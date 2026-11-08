@@ -13,7 +13,7 @@ namespace Warband
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "1.0.2";
+        public const string VERSION = "1.1.0";
 
         internal static ManualLogSource Log;
 
@@ -55,6 +55,9 @@ namespace Warband
                 internal static ConfigEntry<float> CompassMaxDistance;
         internal static ConfigEntry<float> CompassIconSize;
         // Debug
+        internal static ConfigEntry<bool> MapFindButton;
+        internal static ConfigEntry<Vector2> MapFindPosition;
+        internal static ConfigEntry<float> MapFindZoom, MapFindSpeed;
         internal static ConfigEntry<bool> DetailedLog;
 
         private void Awake()
@@ -124,6 +127,15 @@ namespace Warband
             ChatHudSeconds = Config.Bind("6 - Chat", "HudSeconds", 10f,
                 new ConfigDescription("How long a message stays in the party HUD.", new AcceptableValueRange<float>(2f, 60f)));
 
+            MapFindButton = Config.Bind("7 - Map", "FindPartyButton", true,
+                "A button on the large map: click it and the map zooms out, glides to an ally and zooms back in. Each click goes to the next ally.");
+            MapFindPosition = Config.Bind("7 - Map", "ButtonPosition", new Vector2(-30f, 80f),
+                "Where the button sits on the screen, in pixels from the top-left corner. Negative numbers count from the right or bottom edge.");
+            MapFindZoom = Config.Bind("7 - Map", "ZoomOnAlly", 0.035f,
+                new ConfigDescription("How close the map zooms in on the ally (smaller = closer).", new AcceptableValueRange<float>(0.01f, 0.5f)));
+            MapFindSpeed = Config.Bind("7 - Map", "FlightTime", 1f,
+                new ConfigDescription("How long the trip across the map takes (1 = about 1.8 seconds).", new AcceptableValueRange<float>(0.2f, 4f)));
+
             DetailedLog = Config.Bind("9 - Debug", "DetailedLog", false, "Writes details to the BepInEx log.");
 
             Friends.Load();
@@ -146,6 +158,7 @@ namespace Warband
         private void OnGUI()
         {
             Ui.OnGUI();
+            MapFind.OnGUI();
         }
 
         internal static void Debug(string msg)
