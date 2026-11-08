@@ -1,6 +1,6 @@
 {
   "name": "Warband",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "website_url": "https://github.com/Felihens/Warband",
   "description": "Party for you and your friends: invite, ally HUD (health, stamina, eitr, effects, weapon), silhouettes through walls and allies on Nav Compass. Client-side.",
   "dependencies": [

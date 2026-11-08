@@ -6,12 +6,14 @@ using UnityEngine;
 
 namespace Warband
 {
+    public enum SilhouetteStyle { Fill, Outline, AlwaysOnTop }
+
     [BepInPlugin(GUID, NAME, VERSION)]
     public class Plugin : BaseUnityPlugin
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
 
         internal static ManualLogSource Log;
 
@@ -40,6 +42,10 @@ namespace Warband
         internal static ConfigEntry<bool> SilhouetteEnabled;
         internal static ConfigEntry<Color> SilhouetteColor;
         internal static ConfigEntry<float> SilhouetteMaxDistance;
+        internal static ConfigEntry<SilhouetteStyle> SilhouetteMode;
+        internal static ConfigEntry<int> SilhouetteOutlineWidth;
+        internal static ConfigEntry<bool> SilhouetteOnSelf;
+        internal static ConfigEntry<float> SilhouetteMargin;
         internal static ConfigEntry<float> SilhouetteOpacity;
         // Compass
         internal static ConfigEntry<bool> CompassEnabled;
@@ -92,6 +98,14 @@ namespace Warband
                 new ConfigDescription("How opaque the silhouette is.", new AcceptableValueRange<float>(0.05f, 1f)));
             SilhouetteMaxDistance = Config.Bind("4 - Silhouette", "MaxDistance", 80f,
                 new ConfigDescription("Allies farther than this (metres) get no silhouette.", new AcceptableValueRange<float>(5f, 300f)));
+            SilhouetteMode = Config.Bind("4 - Silhouette", "Style", SilhouetteStyle.Fill,
+                "Fill = the hidden part of the ally is filled with the colour. Outline = only the outer edge of the hidden part. AlwaysOnTop = the whole ally, always (for testing).");
+            SilhouetteOutlineWidth = Config.Bind("4 - Silhouette", "OutlineWidth", 3,
+                new ConfigDescription("Thickness of the outline, in pixels.", new AcceptableValueRange<int>(1, 10)));
+            SilhouetteMargin = Config.Bind("4 - Silhouette", "VisibleMargin", 15f,
+                new ConfigDescription("Centimetres of tolerance when deciding that a part of the ally is seen directly. Raise it if feet or parts touching the ground get coloured; lower it if parts just behind a wall don't show.", new AcceptableValueRange<float>(0f, 50f)));
+            SilhouetteOnSelf = Config.Bind("4 - Silhouette", "TestOnYourself", false,
+                "Draws the silhouette on your own character too, so you can try it alone (stand behind a tree in third person).");
 
             CompassEnabled = Config.Bind("5 - Compass", "Enabled", true,
                 "Shows each ally on the Nav Compass bar as a coloured circle with their initial (needs the NavCompass mod).");

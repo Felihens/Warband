@@ -24,7 +24,7 @@ A party for you and your friends. Invite them, and you see each other's health, 
   - Drawn on the same background as the game's windows; the background opacity is adjustable.
   - When an ally dies, their part of the HUD shakes until they respawn.
   - **F8** = edit mode: drag the bar on top to move it, drag an ally to change the order, scroll to resize, F8 again to finish.
-- **Silhouette:** only the hidden parts of an ally are coloured; what you see directly stays as it is. Colour, opacity and maximum distance can be set.
+- **Silhouette:** only the hidden parts of an ally are coloured; what you see directly stays as it is. Fill or outline style; colour, opacity and maximum distance can be set.
 - **Compass:** with [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) installed, each ally shows on the compass bar as a circle in their colour with their initial. Can be switched off, with a maximum distance and icon size.
 - If the party leader leaves or disconnects, the next member takes over.
 
@@ -63,6 +63,10 @@ Press **F1** in game (requires Configuration Manager) or edit `BepInEx/config/fe
 | Silhouette Enabled | on | Silhouette of allies behind objects. |
 | Silhouette Color / Opacity | yellow / 0.5 | Its colour and opacity. |
 | Silhouette MaxDistance | 80 m | Farther allies get no silhouette. |
+| Silhouette Style | Fill | Fill = hidden parts filled, Outline = only their edge, AlwaysOnTop = the whole ally always. |
+| OutlineWidth | 3 | Outline thickness in pixels. |
+| VisibleMargin | 15 cm | Tolerance for parts seen directly. Raise it if feet touching the ground get coloured; lower it if parts just behind a wall don't show. |
+| TestOnYourself | off | Draws the silhouette on your own character too, to try it alone. |
 | Compass Enabled | on | Allies on the Nav Compass bar. |
 | Compass MaxDistance | 0 | Farther allies are not shown (0 = always). |
 | Compass IconSize | 20 | Size of the ally circle. |
@@ -95,7 +99,7 @@ Uma party para você e seus amigos. Convide-os e vocês veem a vida, a stamina, 
   - Desenhado com o mesmo fundo das janelas do jogo; a opacidade do fundo é ajustável.
   - Quando um aliado morre, a parte dele no HUD treme até ele renascer.
   - **F8** = modo de edição: arraste a barra de cima para mover, arraste um aliado para mudar a ordem, use a rodinha para mudar o tamanho, F8 de novo para terminar.
-- **Silhueta:** só as partes escondidas do aliado ficam coloridas; o que você vê diretamente fica normal. Cor, opacidade e distância máxima configuráveis.
+- **Silhueta:** só as partes escondidas do aliado ficam coloridas; o que você vê diretamente fica normal. Estilo preenchido ou contorno; cor, opacidade e distância máxima configuráveis.
 - **Bússola:** com o [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) instalado, cada aliado aparece na barra da bússola como um círculo na cor dele com a inicial. Dá para desligar, com distância máxima e tamanho do ícone.
 - Se o líder sair ou cair, o próximo membro assume.
 
