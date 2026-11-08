@@ -23,7 +23,7 @@ namespace Warband
         private static bool _dragging;
 
         private static Texture2D _white;
-        private static GUIStyle _name, _small, _tiny, _tinyLeft, _prompt, _bold, _initial, _barText;
+        private static GUIStyle _name, _small, _tiny, _tinyLeft, _chat, _prompt, _bold, _initial, _barText;
         private static Font _font;
         private static bool _stylesReady;
 
@@ -159,6 +159,11 @@ namespace Warband
             _tinyLeft = new GUIStyle(_name);
             _tinyLeft.fontSize = 12;
             _tinyLeft.alignment = TextAnchor.UpperLeft;
+            _chat = new GUIStyle(_tinyLeft);
+            _chat.fontStyle = FontStyle.Italic;
+            _chat.richText = false;
+            _chat.wordWrap = false;
+            _chat.clipping = TextClipping.Clip;
             _initial = new GUIStyle(_name);
             _initial.fontSize = 11;
             _initial.alignment = TextAnchor.MiddleCenter;
@@ -289,7 +294,13 @@ namespace Warband
             if (Plugin.ShowStamina.Value) h += 7f;
             if (Plugin.ShowEitr.Value && m.MaxEitr > 0f) h += 7f;
             if (Plugin.ShowBuffs.Value && Plugin.MaxBuffs.Value > 0 && m.Buffs.Count > 0) h += 22f;
+            if (ChatShown(m)) h += 16f;
             return Mathf.Max(h, Plugin.ShowWeapon.Value ? 40f : 0f) + 6f;
+        }
+
+        private static bool ChatShown(Member m)
+        {
+            return Plugin.ChatInHud.Value && m.ChatText.Length > 0 && Time.time - m.ChatAt < Plugin.ChatHudSeconds.Value;
         }
 
         private const float HandleH = 36f;   // the "move" bar above the HUD in edit mode
@@ -488,6 +499,13 @@ namespace Warband
                     bx += 22f;
                     shown++;
                 }
+            }
+            if (ChatShown(m))
+            {
+                float left = Plugin.ChatHudSeconds.Value - (now - m.ChatAt);
+                float fade = Mathf.Clamp01(left);   // fades out over the last second
+                Text(new Rect(sh.x + 2f, y0 + sh.y + BlockHeight(m) - 6f - 16f, W - 4f, 16f), "\"" + m.ChatText + "\"", _chat,
+                    new Color(Plugin.ChatColor.Value.r, Plugin.ChatColor.Value.g, Plugin.ChatColor.Value.b, a * fade));
             }
         }
 

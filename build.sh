@@ -15,7 +15,7 @@ mkdir -p bin
   -r:"$MW/UnityEngine.dll" -r:"$MW/UnityEngine.CoreModule.dll" -r:"$MW/UnityEngine.PhysicsModule.dll" -r:"$MW/UnityEngine.InputLegacyModule.dll" \
   -r:"$MW/UnityEngine.AudioModule.dll" -r:"$MW/UnityEngine.AnimationModule.dll" -r:"$MW/UnityEngine.UnityWebRequestModule.dll" \
   -r:"$MW/UnityEngine.UnityWebRequestAudioModule.dll" \
-  -r:"$MW/UnityEngine.IMGUIModule.dll" -r:"$MW/UnityEngine.UI.dll" -r:"$MW/UnityEngine.UIModule.dll" -r:"$MW/UnityEngine.TextRenderingModule.dll" -r:"$MW/Unity.TextMeshPro.dll" -r:"$MW/assembly_guiutils.dll" \
+  -r:"$MW/UnityEngine.IMGUIModule.dll" -r:"$MW/UnityEngine.UI.dll" -r:"$MW/UnityEngine.UIModule.dll" -r:"$MW/UnityEngine.TextRenderingModule.dll" -r:"$MW/Unity.TextMeshPro.dll" -r:"$MW/assembly_guiutils.dll" -r:"$MW/gui_framework.dll" \
   -r:"$MW/assembly_valheim.dll" -r:"$MW/assembly_utils.dll" -r:"$MW/SoftReferenceableAssets.dll" -r:"$MW/Splatform.dll" \
   -r:"$GAME/BepInEx/core/BepInEx.dll" -r:"$GAME/BepInEx/core/0Harmony.dll" \
   -recurse:'src\*.cs'

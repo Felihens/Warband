@@ -23,6 +23,8 @@ namespace Warband
         public float VitalsAt = -100f;
         public float MissingSince = -1f;
         public float DeadSince = -1f;   // when they died, -1 while alive
+        public string ChatText = "";
+        public float ChatAt = -100f;   // when their last party chat message arrived
     }
 
     // The party lives only in the games of its members: messages go player to player through the
@@ -163,6 +165,7 @@ namespace Warband
             rpc.Register<ZPackage>(RpcRoster, new Action<long, ZPackage>(OnRoster));
             rpc.Register<ZPackage>(RpcLeave, new Action<long, ZPackage>(OnLeave));
             rpc.Register<ZPackage>(RpcVitals, new Action<long, ZPackage>(OnVitals));
+            rpc.Register<ZPackage>(PartyChat.Rpc, new Action<long, ZPackage>(PartyChat.OnMessage));
             _registeredOn = rpc;
             Plugin.Debug("[net] messages registered, my id " + Me);
         }

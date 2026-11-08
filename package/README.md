@@ -26,6 +26,7 @@ A party for you and your friends. Invite them, and you see each other's health, 
   - **F8** = edit mode: drag the bar on top to move it, drag an ally to change the order, scroll to resize, F8 again to finish.
 - **Silhouette:** only the hidden parts of an ally are coloured; what you see directly stays as it is. Fill or outline style; colour, opacity and maximum distance can be set.
 - **Compass:** with [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) installed, each ally shows on the compass bar as a circle in their colour with their initial. Can be switched off, with a maximum distance and icon size.
+- **Party chat:** type `/p message` (or `/party message`) in the normal chat. Only your party sees it, with a [Party] tag and your colour; it also shows under your part of their party HUD for a few seconds.
 - If the party leader leaves or disconnects, the next member takes over.
 
 ### Requirements
@@ -70,6 +71,8 @@ Press **F1** in game (requires Configuration Manager) or edit `BepInEx/config/fe
 | Compass Enabled | on | Allies on the Nav Compass bar. |
 | Compass MaxDistance | 0 | Farther allies are not shown (0 = always). |
 | Compass IconSize | 20 | Size of the ally circle. |
+| Chat Color | light blue | Colour of party chat messages. |
+| Chat ShowInHud / HudSeconds | on / 10 s | Last message under each ally in the HUD, and for how long. |
 | DetailedLog | off | Writes details to the BepInEx log (for bug reports). |
 
 ### Notes
@@ -101,6 +104,7 @@ Uma party para você e seus amigos. Convide-os e vocês veem a vida, a stamina, 
   - **F8** = modo de edição: arraste a barra de cima para mover, arraste um aliado para mudar a ordem, use a rodinha para mudar o tamanho, F8 de novo para terminar.
 - **Silhueta:** só as partes escondidas do aliado ficam coloridas; o que você vê diretamente fica normal. Estilo preenchido ou contorno; cor, opacidade e distância máxima configuráveis.
 - **Bússola:** com o [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) instalado, cada aliado aparece na barra da bússola como um círculo na cor dele com a inicial. Dá para desligar, com distância máxima e tamanho do ícone.
+- **Chat de party:** digite `/p mensagem` (ou `/party mensagem`) no chat normal. Só a sua party vê, com a tag [Party] e a sua cor; também aparece embaixo do seu bloco no HUD deles por alguns segundos.
 - Se o líder sair ou cair, o próximo membro assume.
 
 ### Requisitos

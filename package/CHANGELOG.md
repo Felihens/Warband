@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+- Party chat: type `/p message` (or `/party message`) in the chat to talk only to your party. It shows with a [Party] tag and the sender's colour, and for a few seconds under their part of the party HUD. Options in `6 - Chat`.
+- Chat de party: digite `/p mensagem` (ou `/party mensagem`) no chat para falar só com a party. Aparece com a tag [Party] e a cor de quem falou, e por alguns segundos embaixo do bloco dele no HUD da party. Opções em `6 - Chat`.
+
 ## 1.0.1
 - Silhouette rebuilt: only the parts of an ally hidden behind something are coloured. Parts behind the ally's own body (an arm behind the torso, the chest seen from behind) no longer light up, and it no longer flickers when the camera zooms.
 - New silhouette styles: Fill (default), Outline (only the edge of the hidden part, drawn on the object in front) and AlwaysOnTop.

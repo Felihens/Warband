@@ -13,7 +13,7 @@ namespace Warband
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "1.0.1";
+        public const string VERSION = "1.0.2";
 
         internal static ManualLogSource Log;
 
@@ -48,6 +48,9 @@ namespace Warband
         internal static ConfigEntry<float> SilhouetteMargin;
         internal static ConfigEntry<float> SilhouetteOpacity;
         // Compass
+        internal static ConfigEntry<Color> ChatColor;
+        internal static ConfigEntry<bool> ChatInHud;
+        internal static ConfigEntry<float> ChatHudSeconds;
         internal static ConfigEntry<bool> CompassEnabled;
                 internal static ConfigEntry<float> CompassMaxDistance;
         internal static ConfigEntry<float> CompassIconSize;
@@ -113,6 +116,13 @@ namespace Warband
                 new ConfigDescription("Allies farther than this (metres) are not shown on the compass. 0 = always shown.", new AcceptableValueRange<float>(0f, 10000f)));
             CompassIconSize = Config.Bind("5 - Compass", "IconSize", 20f,
                 new ConfigDescription("Size of the ally icon on the compass.", new AcceptableValueRange<float>(10f, 40f)));
+
+            ChatColor = Config.Bind("6 - Chat", "Color", new Color(0.55f, 0.85f, 1f, 1f),
+                "Colour of party chat messages. Type /p and your message in the chat to talk to your party only.");
+            ChatInHud = Config.Bind("6 - Chat", "ShowInHud", true,
+                "Also shows each ally's last message under their part of the party HUD for a few seconds.");
+            ChatHudSeconds = Config.Bind("6 - Chat", "HudSeconds", 10f,
+                new ConfigDescription("How long a message stays in the party HUD.", new AcceptableValueRange<float>(2f, 60f)));
 
             DetailedLog = Config.Bind("9 - Debug", "DetailedLog", false, "Writes details to the BepInEx log.");
 
