@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+- Send items to your party: with your bag open, hover an item and press P, pick a party member nearby (30 m), and they get a Y / N prompt. The item leaves your bag only once they accept; a full bag declines on its own, and the item comes back if they leave before it arrives. Items that can't go through portals can be sent too. Options `SendItemKey` and `SendItemRange`.
+- Envie itens para a party: com a bolsa aberta, passe o mouse num item e aperte P, escolha um membro da party por perto (30 m) e ele recebe um pedido Y / N. O item só sai da sua bolsa quando ele aceita; bolsa cheia recusa sozinha, e o item volta se ele sair antes de chegar. Itens que não passam em portal também podem ser enviados. Opções `SendItemKey` e `SendItemRange`.
+
 ## 1.1.0
 - Find your party on the map: a "Find party" button on the large map. Click it and the map zooms out, glides to an ally and zooms back in, with a ring and their name in the middle. Each click goes to the next ally. Works even when the ally hides from the map. Options in `7 - Map`.
 - Encontre a party no mapa: um botão "Find party" no mapa grande. Clique e o mapa se afasta, desliza até um aliado e aproxima de novo, com um anel e o nome dele no meio. Cada clique vai para o próximo aliado. Funciona mesmo se o aliado estiver escondido no mapa. Opções em `7 - Map`.

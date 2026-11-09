@@ -119,6 +119,7 @@ namespace Warband
             else if (Editing) DrawHud();
 
             if (Party.HasPendingInvite && !PanelOpen && !hudHidden) DrawPrompt();
+            if (!hudHidden || InventoryGui.IsVisible()) Gift.OnGUI(_prompt, _font, Box, Text);
 
             if (PanelOpen)
             {

@@ -13,7 +13,7 @@ namespace Warband
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "1.1.0";
+        public const string VERSION = "1.2.0";
 
         internal static ManualLogSource Log;
 
@@ -22,6 +22,8 @@ namespace Warband
         internal static ConfigEntry<KeyboardShortcut> InviteKey;
         internal static ConfigEntry<KeyboardShortcut> AcceptKey;
         internal static ConfigEntry<KeyboardShortcut> DeclineKey;
+        internal static ConfigEntry<KeyboardShortcut> SendKey;
+        internal static ConfigEntry<float> SendRange;
         internal static ConfigEntry<KeyboardShortcut> EditHudKey;
         // Party
         internal static ConfigEntry<bool> AutoAcceptFriends;
@@ -71,9 +73,13 @@ namespace Warband
                 "Accepts a party invite.");
             DeclineKey = Config.Bind("1 - Keys", "DeclineKey", new KeyboardShortcut(KeyCode.N),
                 "Declines a party invite.");
+            SendKey = Config.Bind("1 - Keys", "SendItemKey", new KeyboardShortcut(KeyCode.P),
+                "With your bag open, hover an item and press this to send it to a party member nearby.");
             EditHudKey = Config.Bind("1 - Keys", "EditHudKey", new KeyboardShortcut(KeyCode.F8),
                 "Edit mode for the party HUD: drag it with the mouse, scroll to resize, press again to finish.");
 
+            SendRange = Config.Bind("2 - Party", "SendItemRange", 30f,
+                new ConfigDescription("How close a party member must be to send them an item (metres).", new AcceptableValueRange<float>(2f, 100f)));
             AutoAcceptFriends = Config.Bind("2 - Party", "AutoAcceptFriends", false,
                 "Invites from players on your friends list are accepted on their own.");
             MaxMembers = Config.Bind("2 - Party", "MaxMembers", 10,
@@ -147,6 +153,7 @@ namespace Warband
         {
             Party.Update();
             Ui.Update();
+            Gift.Update();
         }
 
         private void LateUpdate()

@@ -166,6 +166,7 @@ namespace Warband
             rpc.Register<ZPackage>(RpcLeave, new Action<long, ZPackage>(OnLeave));
             rpc.Register<ZPackage>(RpcVitals, new Action<long, ZPackage>(OnVitals));
             rpc.Register<ZPackage>(PartyChat.Rpc, new Action<long, ZPackage>(PartyChat.OnMessage));
+            rpc.Register<ZPackage>(Gift.Rpc, new Action<long, ZPackage>(Gift.OnMessage));
             _registeredOn = rpc;
             Plugin.Debug("[net] messages registered, my id " + Me);
         }
