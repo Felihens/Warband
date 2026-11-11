@@ -13,7 +13,7 @@ namespace Warband
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "1.2.0";
+        public const string VERSION = "1.3.0";
 
         internal static ManualLogSource Log;
 
@@ -134,9 +134,9 @@ namespace Warband
                 new ConfigDescription("How long a message stays in the party HUD.", new AcceptableValueRange<float>(2f, 60f)));
 
             MapFindButton = Config.Bind("7 - Map", "FindPartyButton", true,
-                "A button on the large map: click it and the map zooms out, glides to an ally and zooms back in. Each click goes to the next ally.");
+                "A button for each ally on the large map: click a name and the map zooms out, glides to that ally and zooms back in.");
             MapFindPosition = Config.Bind("7 - Map", "ButtonPosition", new Vector2(-30f, 80f),
-                "Where the button sits on the screen, in pixels from the top-left corner. Negative numbers count from the right or bottom edge.");
+                "Where the column of ally buttons sits on the screen, in pixels from the top-left corner. Negative numbers count from the right or bottom edge.");
             MapFindZoom = Config.Bind("7 - Map", "ZoomOnAlly", 0.035f,
                 new ConfigDescription("How close the map zooms in on the ally (smaller = closer).", new AcceptableValueRange<float>(0.01f, 0.5f)));
             MapFindSpeed = Config.Bind("7 - Map", "FlightTime", 1f,

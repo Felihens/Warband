@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Warband
 {
-    // "Find party" button on the large map. Click it and the map zooms out, glides to an ally and zooms
-    // back in, with a ring and the ally's name in the middle. Each click goes to the next ally.
+    // One button per ally on the large map. Click a name and the map zooms out, glides to that ally and
+    // zooms back in, with a ring and the ally's name in the middle.
     // Positions come from the party (the same ones the HUD uses), so it works even when the ally hides
     // from the map.
     [HarmonyPatch]
@@ -18,14 +18,13 @@ namespace Warband
 
         private const float WorldWidth = 2048f * 12f;   // what the map shows at zoom 1, roughly
 
-        private static int _next;           // which ally the next click goes to
         private static long _target;        // ally we fly to (peer), 0 = none
         private static string _targetName = "";
         private static float _start = -1f;  // when the flight started
         private static Vector3 _fromOffset;
         private static float _fromZoom, _outZoom, _inZoom;
         private static float _arrived = -100f;
-        private static Rect _button;
+        private static Rect _area;          // the whole column of buttons
         private static Font _font;
         private static GUIStyle _label;
         private static Texture2D _ring;
@@ -40,14 +39,16 @@ namespace Warband
             return Minimap.instance != null && Minimap.instance.m_mode == Minimap.MapMode.Large && Player.m_localPlayer != null;
         }
 
-        private static List<Member> Allies()
+        // every party member but you; the bool says whether we know where they are
+        private static List<KeyValuePair<Member, bool>> Allies()
         {
-            List<Member> list = new List<Member>();
+            List<KeyValuePair<Member, bool>> list = new List<KeyValuePair<Member, bool>>();
             if (!Party.InParty) return list;
             foreach (Member m in Party.Members)
             {
+                if (m.Peer == Party.Me) continue;
                 Vector3 pos;
-                if (m.Peer != Party.Me && Ui.AllyPosition(m, out pos)) list.Add(m);
+                list.Add(new KeyValuePair<Member, bool>(m, Ui.AllyPosition(m, out pos)));
             }
             return list;
         }
@@ -61,18 +62,30 @@ namespace Warband
                 foreach (Font f in Resources.FindObjectsOfTypeAll<Font>())
                     if (f.name == "AveriaSerifLibre-Bold") { _font = f; break; }
 
+            List<KeyValuePair<Member, bool>> allies = Allies();
+            if (allies.Count == 0) { _area = new Rect(); DrawMarker(); return; }
+
             Vector2 at = Plugin.MapFindPosition.Value;
-            float w = 150f, h = 34f;
+            const float w = 160f, h = 30f, gap = 4f;
+            float total = allies.Count * h + (allies.Count - 1) * gap;
             float x = at.x < 0f ? Screen.width + at.x - w : at.x;
-            float y = at.y < 0f ? Screen.height + at.y - h : at.y;
-            _button = new Rect(x, y, w, h);
+            float y = at.y < 0f ? Screen.height + at.y - total : at.y;
+            _area = new Rect(x, y, w, total);
 
             GUISkin old = GUI.skin;
             GUI.skin = Skin.Get(_font);
-            List<Member> allies = Allies();
-            string text = allies.Count == 0 ? "Find party" : allies.Count == 1 ? "Find " + Short(allies[0].Name) : "Find party (" + allies.Count + ")";
-            GUI.enabled = allies.Count > 0;
-            if (GUI.Button(_button, text)) Go(allies);
+            for (int i = 0; i < allies.Count; i++)
+            {
+                Member m = allies[i].Key;
+                bool known = allies[i].Value;
+                Rect r = new Rect(x, y + i * (h + gap), w, h);
+                bool current = (Flying || Time.unscaledTime - _arrived < 3f) && m.Peer == _target;
+                GUI.enabled = known;
+                GUI.color = current ? new Color(1f, 0.92f, 0.6f) : Color.white;
+                string text = known ? Short(m.Name) : Short(m.Name) + " (?)";
+                if (GUI.Button(r, text)) Go(m);
+            }
+            GUI.color = Color.white;
             GUI.enabled = true;
             GUI.skin = old;
 
@@ -84,12 +97,8 @@ namespace Warband
             return name.Length > 12 ? name.Substring(0, 11) + "…" : name;
         }
 
-        private static void Go(List<Member> allies)
+        private static void Go(Member m)
         {
-            if (allies.Count == 0) return;
-            if (_next >= allies.Count) _next = 0;
-            Member m = allies[_next];
-            _next = (_next + 1) % allies.Count;
             Vector3 pos;
             if (!Ui.AllyPosition(m, out pos) || Offset == null) return;
 
@@ -213,7 +222,7 @@ namespace Warband
         {
             if (!Plugin.MapFindButton.Value || !LargeMap() || !Party.InParty) return false;
             Vector3 mp = Input.mousePosition;
-            return _button.Contains(new Vector2(mp.x, Screen.height - mp.y));
+            return _area.Contains(new Vector2(mp.x, Screen.height - mp.y));
         }
 
         [HarmonyPatch(typeof(Minimap), "OnMapLeftDown")]

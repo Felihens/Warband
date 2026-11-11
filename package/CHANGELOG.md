@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+- One button per ally on the large map instead of a single "Find party" button: click a name to fly to that ally. A greyed name (?) means their position isn't known yet; the button glows gold while the map flies.
+- Um botão por aliado no mapa grande em vez de um único botão "Find party": clique num nome para voar até esse aliado. Nome cinza (?) quer dizer que a posição ainda não é conhecida; o botão fica dourado enquanto o mapa voa.
+
 ## 1.2.0
 - Send items to your party: with your bag open, hover an item and press P, pick a party member nearby (30 m), and they get a Y / N prompt. The item leaves your bag only once they accept; a full bag declines on its own, and the item comes back if they leave before it arrives. Items that can't go through portals can be sent too. Options `SendItemKey` and `SendItemRange`.
 - Envie itens para a party: com a bolsa aberta, passe o mouse num item e aperte P, escolha um membro da party por perto (30 m) e ele recebe um pedido Y / N. O item só sai da sua bolsa quando ele aceita; bolsa cheia recusa sozinha, e o item volta se ele sair antes de chegar. Itens que não passam em portal também podem ser enviados. Opções `SendItemKey` e `SendItemRange`.

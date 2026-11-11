@@ -27,7 +27,7 @@ A party for you and your friends. Invite them, and you see each other's health, 
 - **Silhouette:** only the hidden parts of an ally are coloured; what you see directly stays as it is. Fill or outline style; colour, opacity and maximum distance can be set.
 - **Compass:** with [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) installed, each ally shows on the compass bar as a circle in their colour with their initial. Can be switched off, with a maximum distance and icon size.
 - **Party chat:** type `/p message` (or `/party message`) in the normal chat. Only your party sees it, with a [Party] tag and your colour; it also shows under your part of their party HUD for a few seconds.
-- **Find party on the map:** a *Find party* button on the large map. Click it and the map zooms out, glides to an ally and zooms back in, with a ring and their name in the middle. Each click goes to the next ally, even if they hide from the map.
+- **Find party on the map:** a button for each ally on the large map. Click a name and the map zooms out, glides to that ally and zooms back in, with a ring and their name in the middle, even if they hide from the map. A greyed name (?) means their position isn't known yet.
 - **Send items:** with your bag open, hover an item and press **P**, then pick a party member nearby (30 m). They get a **Y / N** prompt, and the item leaves your bag only once they accept. A full bag declines on its own.
 - If the party leader leaves or disconnects, the next member takes over.
 
@@ -79,7 +79,7 @@ Press **F1** in game (requires Configuration Manager) or edit `BepInEx/config/fe
 | Compass IconSize | 20 | Size of the ally circle. |
 | Chat Color | light blue | Colour of party chat messages. |
 | Chat ShowInHud / HudSeconds | on / 10 s | Last message under each ally in the HUD, and for how long. |
-| FindPartyButton | on | The *Find party* button on the large map. |
+| FindPartyButton | on | The ally buttons on the large map. |
 | ButtonPosition | -30, 80 | Where the button sits (negative = from the right / bottom edge). |
 | ZoomOnAlly / FlightTime | 0.035 / 1 | How close the map zooms in on the ally, and how long the trip takes. |
 | DetailedLog | off | Writes details to the BepInEx log (for bug reports). |
@@ -114,7 +114,7 @@ Uma party para você e seus amigos. Convide-os e vocês veem a vida, a stamina, 
 - **Silhueta:** só as partes escondidas do aliado ficam coloridas; o que você vê diretamente fica normal. Estilo preenchido ou contorno; cor, opacidade e distância máxima configuráveis.
 - **Bússola:** com o [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) instalado, cada aliado aparece na barra da bússola como um círculo na cor dele com a inicial. Dá para desligar, com distância máxima e tamanho do ícone.
 - **Chat de party:** digite `/p mensagem` (ou `/party mensagem`) no chat normal. Só a sua party vê, com a tag [Party] e a sua cor; também aparece embaixo do seu bloco no HUD deles por alguns segundos.
-- **Encontrar a party no mapa:** um botão *Find party* no mapa grande. Clique e o mapa se afasta, desliza até um aliado e aproxima de novo, com um anel e o nome dele no meio. Cada clique vai para o próximo aliado, mesmo se ele estiver escondido no mapa.
+- **Encontrar a party no mapa:** um botão para cada aliado no mapa grande. Clique num nome e o mapa se afasta, desliza até esse aliado e aproxima de novo, com um anel e o nome dele no meio, mesmo se ele estiver escondido no mapa. Um nome cinza (?) quer dizer que a posição dele ainda não é conhecida.
 - **Enviar itens:** com a bolsa aberta, passe o mouse num item e aperte **P**, depois escolha um membro da party por perto (30 m). Ele recebe um pedido **Y / N**, e o item só sai da sua bolsa quando ele aceita. Bolsa cheia recusa sozinha.
 - Se o líder sair ou cair, o próximo membro assume.
 

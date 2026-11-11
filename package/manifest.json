@@ -1,6 +1,6 @@
 {
   "name": "Warband",
-  "version_number": "1.2.0",
+  "version_number": "1.3.0",
   "website_url": "https://github.com/Felihens/Warband",
   "description": "Party for you and your friends: invite, party chat, ally HUD (health, stamina, eitr, effects, weapon), silhouettes through walls, allies on Nav Compass, a map button to find them and item sending. Client-side.",
   "dependencies": [
