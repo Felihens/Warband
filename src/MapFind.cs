@@ -70,6 +70,9 @@ namespace Warband
             float total = allies.Count * h + (allies.Count - 1) * gap;
             float x = at.x < 0f ? Screen.width + at.x - w : at.x;
             float y = at.y < 0f ? Screen.height + at.y - total : at.y;
+            // keep clear of the game's own "shared map" toggle (it shows once you have pins from a map table)
+            Rect hint;
+            if (SharedHint(out hint) && hint.Overlaps(new Rect(x, y, w, total))) y = hint.yMax + 6f;
             _area = new Rect(x, y, w, total);
 
             GUISkin old = GUI.skin;
@@ -90,6 +93,23 @@ namespace Warband
             GUI.skin = old;
 
             DrawMarker();
+        }
+
+        private static bool _hintLogged;
+
+        // the toggle's rectangle on screen, in GUI coordinates (y from the top)
+        private static bool SharedHint(out Rect r)
+        {
+            r = new Rect();
+            Minimap map = Minimap.instance;
+            if (map == null || map.m_sharedMapHint == null || !map.m_sharedMapHint.activeInHierarchy) return false;
+            RectTransform t = map.m_sharedMapHint.transform as RectTransform;
+            if (t == null) return false;
+            Vector3[] c = new Vector3[4];
+            t.GetWorldCorners(c);
+            r = new Rect(c[0].x, Screen.height - c[1].y, c[2].x - c[0].x, c[1].y - c[0].y);
+            if (!_hintLogged) { _hintLogged = true; Plugin.Debug("[map] shared map toggle at " + r); }
+            return true;
         }
 
         private static string Short(string name)

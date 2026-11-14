@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0
+- Chat tabs: **All** and **Party** buttons above the chat. In the Party tab you only see party messages, and what you type goes straight to the party, no `/p` needed. `/p` alone opens the Party tab; `/all` (or `/a`) goes back; `/p message` and `/all message` send a single message. The chat explains these commands once per session.
+- Abas no chat: botões **All** e **Party** acima do chat. Na aba Party você só vê as mensagens da party, e o que você digita vai direto para a party, sem `/p`. `/p` sozinho abre a aba Party; `/all` (ou `/a`) volta; `/p mensagem` e `/all mensagem` mandam uma mensagem só. O chat explica esses comandos uma vez por sessão.
+- The party HUD hides while a window (a chest, the Storage window of other mods...) covers it, so it no longer draws on top of other windows.
+- O HUD da party se esconde enquanto uma janela (um baú, a janela Storage de outros mods...) está por cima dele, então não aparece mais por cima de outras janelas.
+- The ally buttons on the large map move down when the game's own "shared map" toggle is showing, so they don't cover it.
+- Os botões de aliados no mapa grande descem quando o botão de "mapa compartilhado" do jogo aparece, para não ficarem por cima dele.
+- The party HUD costs about half as much per frame.
+- O HUD da party custa cerca da metade por quadro.
+
 ## 1.3.0
 - One button per ally on the large map instead of a single "Find party" button: click a name to fly to that ally. A greyed name (?) means their position isn't known yet; the button glows gold while the map flies.
 - Um botão por aliado no mapa grande em vez de um único botão "Find party": clique num nome para voar até esse aliado. Nome cinza (?) quer dizer que a posição ainda não é conhecida; o botão fica dourado enquanto o mapa voa.

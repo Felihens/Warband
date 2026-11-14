@@ -115,7 +115,10 @@ namespace Warband
             Styles();
             bool hudHidden = Hud.instance == null || Hud.instance.m_rootObject == null || !Hud.instance.m_rootObject.activeSelf;
 
-            if (Plugin.ShowHud.Value && !hudHidden && !Minimap.IsOpen()) DrawHud();
+            // The HUD is drawn with plain GUI calls (no GUILayout), so the Layout pass Unity runs before each
+            // repaint has nothing to do for it: skip it there (half the HUD's cost). Editing needs every event.
+            bool layoutPass = Event.current != null && Event.current.type == EventType.Layout;
+            if (Plugin.ShowHud.Value && !hudHidden && !Minimap.IsOpen() && !Covered.IsCovered()) { if (!layoutPass || Editing) DrawHud(); }
             else if (Editing) DrawHud();
 
             if (Party.HasPendingInvite && !PanelOpen && !hudHidden) DrawPrompt();
@@ -319,6 +322,7 @@ namespace Warband
 
             float total = 0f;
             foreach (Member m in list) total += BlockHeight(m) + 4f;
+            Covered.Rect = new Rect(pos.x - Pad * scale, pos.y - Pad * scale, (W + Pad * 2) * scale, (total - 4f + Pad * 2) * scale);
             Matrix4x4 oldMatrix = GUI.matrix;
             GUI.matrix = Matrix4x4.TRS(new Vector3(pos.x, pos.y, 0f), Quaternion.identity, new Vector3(scale, scale, 1f));
 

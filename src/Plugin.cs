@@ -13,7 +13,7 @@ namespace Warband
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "1.3.0";
+        public const string VERSION = "1.4.0";
 
         internal static ManualLogSource Log;
 
@@ -154,6 +154,7 @@ namespace Warband
             Party.Update();
             Ui.Update();
             Gift.Update();
+            ChatTabs.Update();
         }
 
         private void LateUpdate()

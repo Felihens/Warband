@@ -81,7 +81,18 @@ namespace Warband
         private static bool Prefix(Chat __instance)
         {
             if (__instance.m_input == null) return true;
-            string msg = PartyChat.Parse(__instance.m_input.text);
+            string raw = __instance.m_input.text ?? "";
+            string low = raw.Trim().ToLowerInvariant();
+            if (low == "/p" || low == "/party") { ChatTabs.Set(true, true); return false; }   // alone: open the Party tab
+            if (low == "/all" || low == "/a") { ChatTabs.Set(false, true); return false; }
+            if (low.StartsWith("/all ") || low.StartsWith("/a "))   // back to All and send this to everyone
+            {
+                ChatTabs.Set(false, true);
+                __instance.m_input.text = raw.TrimStart().Substring(low.StartsWith("/all ") ? 5 : 3).Trim();
+                return __instance.m_input.text.Length > 0;
+            }
+            string msg = PartyChat.Parse(raw);
+            if (msg == null && ChatTabs.PartyTab && raw.Trim().Length > 0 && !raw.TrimStart().StartsWith("/")) msg = raw.Trim();
             if (msg == null) return true;
             try { PartyChat.Send(msg); }
             catch (Exception e) { Plugin.Log.LogWarning("Party chat failed: " + e.Message); }
