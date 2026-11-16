@@ -4,7 +4,7 @@
 set -e
 cd "$(dirname "$0")"
 
-GAME="D:/SteamLibrary/steamapps/common/Valheim"
+GAME="${VALHEIM_DIR:-D:/SteamLibrary/steamapps/common/Valheim}"
 MW="$GAME/valheim_Data/Managed"
 CSC="/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe"
 

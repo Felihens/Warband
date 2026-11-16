@@ -1,8 +1,8 @@
 # Warband
 
-A client-side BepInEx mod for Valheim: a party for you and your friends, with an ally HUD (health, stamina, eitr, effects, weapon), silhouettes of allies behind walls and allies on the Nav Compass bar.
+A client-side BepInEx mod for Valheim: a persistent guild for you and your friends, with an ally HUD (health, stamina, eitr, effects, weapon), silhouettes of allies behind walls and allies on the Nav Compass bar.
 
-Mod para Valheim (BepInEx, client-side): uma party para você e seus amigos, com HUD dos aliados (vida, stamina, eitr, efeitos, arma), silhueta dos aliados atrás de paredes e aliados na barra do Nav Compass.
+Mod para Valheim (BepInEx, client-side): uma guilda persistente para você e seus amigos, com HUD dos aliados (vida, stamina, eitr, efeitos, arma), silhueta dos aliados atrás de paredes e aliados na barra do Nav Compass.
 
 For players, see [package/README.md](package/README.md). That file is also the Thunderstore page.
 Para jogadores, veja [package/README.md](package/README.md).

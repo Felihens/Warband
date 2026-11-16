@@ -6,18 +6,18 @@
 
 ## English
 
-A party for you and your friends. Invite them, and you see each other's health, stamina, eitr, active effects and weapon in a HUD you can move, resize and reorder. Allies behind walls, trees or hills show as a coloured silhouette, and each one has their own coloured marker with their initial on the Nav Compass bar.
+A guild for you and your friends. Once your friends are in it they stay in it: when anyone comes back to the game, the guild is together again with no new invite. You see each other's health, stamina, eitr, active effects and weapon in a HUD you can move, resize and reorder. Allies behind walls, trees or hills show as a coloured silhouette, and each one has their own coloured marker with their initial on the Nav Compass bar.
 
 ### Features
 
-- **Client-side.** The server needs nothing. **Everyone in the party needs the mod.**
-- **Invite:** look at a player and press **J**, or use the party panel.
-- **Party panel (Shift+P):**
+- **Client-side.** The server needs nothing. **Everyone in the guild needs the mod, on the same version.**
+- **Invite:** look at a player and press **J**, or use the guild panel. Only the leader and officers can invite (the first invite founds the guild and you lead it).
+- **Guild panel (Shift+P):**
   - **Players**: everyone on the server, with *Invite* and *Add friend*.
   - **Friends**: your friends list (kept on your computer). Add by name, see who is online, invite them. Optionally accept invites from friends on their own.
-  - **Party**: the members. The leader can remove someone or hand over the lead. Leave the party. Quick switches for the HUD, silhouette and compass.
-- **Accept / decline** an invite with **Y / N**. Invites expire after 30 seconds.
-- **Party HUD:**
+  - **Guild**: all members, online and offline, with their role (leader, officer, member). The leader can promote or demote officers, remove anyone, hand over the lead and rename the guild; officers can remove plain members, even offline ones. Leave the guild. Quick switches for the HUD, silhouette and compass. Remove, Make leader and Leave ask for a second click.
+- **Accept / decline** an invite with **Y / N**. Invites expire after 30 seconds. A guild member who comes online is recognised by their platform id: no invite is needed again.
+- **Guild HUD:**
   - A health bar with current / max in the middle, a stamina bar, and an eitr bar for allies who have eitr.
   - Active effects (rested, wet, meads, set bonuses...) with the time left.
   - The weapon in the ally's hand, the distance, and their colour with their initial.
@@ -26,11 +26,11 @@ A party for you and your friends. Invite them, and you see each other's health, 
   - **F8** = edit mode: drag the bar on top to move it, drag an ally to change the order, scroll to resize, F8 again to finish.
 - **Silhouette:** only the hidden parts of an ally are coloured; what you see directly stays as it is. Fill or outline style; colour, opacity and maximum distance can be set.
 - **Compass:** with [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) installed, each ally shows on the compass bar as a circle in their colour with their initial. Can be switched off, with a maximum distance and icon size.
-- **Party chat:** type `/p message` (or `/party message`) in the normal chat. Only your party sees it, with a [Party] tag and your colour; it also shows under your part of their party HUD for a few seconds.
-  - **Chat tabs:** *All* and *Party* buttons above the chat. In the Party tab you only see party messages and what you type goes to the party. `/p` alone opens the Party tab; `/all` (or `/a`) goes back to normal chat; `/all message` goes back and sends that message to everyone.
-- **Find party on the map:** a button for each ally on the large map. Click a name and the map zooms out, glides to that ally and zooms back in, with a ring and their name in the middle, even if they hide from the map. A greyed name (?) means their position isn't known yet.
-- **Send items:** with your bag open, hover an item and press **P**, then pick a party member nearby (30 m). They get a **Y / N** prompt, and the item leaves your bag only once they accept. A full bag declines on its own.
-- If the party leader leaves or disconnects, the next member takes over.
+- **Guild chat:** type `/g message` (`/p` and `/party` work too) in the normal chat. Only your online guild members see it, with a [Guild] tag and your colour; it also shows under your part of their guild HUD for a few seconds.
+  - **Chat tabs:** *All* and *Guild* buttons above the chat. In the Guild tab you only see guild messages and what you type goes to the guild. `/g` (or `/p`) alone opens the Guild tab; `/all` (or `/a`) goes back to normal chat; `/all message` goes back and sends that message to everyone.
+- **Find guild members on the map:** a button for each online ally on the large map. Click a name and the map zooms out, glides to that ally and zooms back in, with a ring and their name in the middle, even if they hide from the map. A greyed name (?) means their position isn't known yet.
+- **Send items:** with your bag open, hover an item and press **P**, then pick a guild member nearby (30 m). They get a **Y / N** prompt, and the item leaves your bag only once they accept. A full bag declines on its own.
+- **The guild is saved** in `BepInEx/config/Warband/guild.txt` on each member's computer. Members who were offline catch up on changes (new members, removals, new roles) the next time they meet someone from the guild. Leaders and officers can edit while the leader is offline; if two edits clash, the newer one of each member wins. Guilds made with Warband 1.x parties are not carried over.
 
 ### Requirements
 
@@ -55,15 +55,15 @@ Press **F1** in game (requires Configuration Manager) or edit `BepInEx/config/fe
 
 | Option | Default | What it does |
 |---|---|---|
-| PanelKey | Shift+P | Opens the party panel. |
+| PanelKey | Shift+P | Opens the guild panel. |
 | InviteKey | J | Invites the player you are looking at. |
-| AcceptKey / DeclineKey | Y / N | Answer a party invite. |
-| EditHudKey | F8 | Move, resize and reorder the party HUD. |
-| SendItemKey | P | With your bag open, send the item under the mouse to a party member. |
-| SendItemRange | 30 m | How close a party member must be to send them an item. |
+| AcceptKey / DeclineKey | Y / N | Answer a guild invite. |
+| EditHudKey | F8 | Move, resize and reorder the guild HUD. |
+| SendItemKey | P | With your bag open, send the item under the mouse to a guild member. |
+| SendItemRange | 30 m | How close a guild member must be to send them an item. |
 | AutoAcceptFriends | off | Accept invites from friends on their own. |
-| MaxMembers | 10 | Most players in one party. |
-| HUD Enabled | on | The party HUD. |
+| MaxMembers | 10 | Most players in one guild. |
+| HUD Enabled | on | The guild HUD. |
 | Position / Scale | | Where the HUD is and how big (easier with F8). |
 | ShowStamina / ShowEitr / ShowBuffs / ShowWeapon / ShowDistance | on | Parts of the HUD. |
 | MaxBuffs | 8 | Most effect icons per ally. |
@@ -78,7 +78,7 @@ Press **F1** in game (requires Configuration Manager) or edit `BepInEx/config/fe
 | Compass Enabled | on | Allies on the Nav Compass bar. |
 | Compass MaxDistance | 0 | Farther allies are not shown (0 = always). |
 | Compass IconSize | 20 | Size of the ally circle. |
-| Chat Color | light blue | Colour of party chat messages. |
+| Chat Color | light blue | Colour of guild chat messages. |
 | Chat ShowInHud / HudSeconds | on / 10 s | Last message under each ally in the HUD, and for how long. |
 | FindPartyButton | on | The ally buttons on the large map. |
 | ButtonPosition | -30, 80 | Where the button sits (negative = from the right / bottom edge). |
@@ -94,18 +94,18 @@ Press **F1** in game (requires Configuration Manager) or edit `BepInEx/config/fe
 
 ## Português
 
-Uma party para você e seus amigos. Convide-os e vocês veem a vida, a stamina, o eitr, os efeitos ativos e a arma uns dos outros num HUD que dá para mover, redimensionar e reordenar. Aliados atrás de paredes, árvores ou morros aparecem como uma silhueta colorida, e cada um tem seu próprio marcador colorido com a inicial na barra do Nav Compass.
+Uma guilda para você e seus amigos. Quem entra na guilda continua nela: quando alguém volta ao jogo, a guilda se junta de novo sem novo convite. Vocês veem a vida, a stamina, o eitr, os efeitos ativos e a arma uns dos outros num HUD que dá para mover, redimensionar e reordenar. Aliados atrás de paredes, árvores ou morros aparecem como uma silhueta colorida, e cada um tem seu próprio marcador colorido com a inicial na barra do Nav Compass.
 
 ### Recursos
 
-- **Client-side.** O servidor não precisa de nada. **Todos da party precisam do mod.**
-- **Convidar:** olhe para um jogador e aperte **J**, ou use o painel da party.
-- **Painel da party (Shift+P):**
+- **Client-side.** O servidor não precisa de nada. **Todos da guilda precisam do mod, na mesma versão.**
+- **Convidar:** olhe para um jogador e aperte **J**, ou use o painel da guilda. Só o líder e os oficiais convidam (o primeiro convite funda a guilda e você a lidera).
+- **Painel da guilda (Shift+P):**
   - **Players**: todos no servidor, com *Invite* (convidar) e *Add friend* (adicionar amigo).
   - **Friends**: sua lista de amigos (salva no seu computador). Adicione pelo nome, veja quem está online e convide. Opcionalmente aceita sozinho os convites de amigos.
-  - **Party**: os membros. O líder pode remover alguém ou passar a liderança. Sair da party. Atalhos para ligar e desligar o HUD, a silhueta e a bússola.
-- **Aceitar / recusar** um convite com **Y / N**. Convites expiram em 30 segundos.
-- **HUD da party:**
+  - **Guild**: todos os membros, online e offline, com o cargo (líder, oficial, membro). O líder promove ou rebaixa oficiais, remove qualquer um, passa a liderança e renomeia a guilda; oficiais removem membros comuns, mesmo offline. Sair da guilda. Atalhos para ligar e desligar o HUD, a silhueta e a bússola. Remover, Passar liderança e Sair pedem um segundo clique.
+- **Aceitar / recusar** um convite com **Y / N**. Convites expiram em 30 segundos. Quem é da guilda é reconhecido pelo id da plataforma ao ficar online: não precisa de novo convite.
+- **HUD da guilda:**
   - Barra de vida com atual / total no meio, barra de stamina e barra de eitr para quem tem eitr.
   - Efeitos ativos (descansado, molhado, hidromel, bônus de conjunto...) com o tempo restante.
   - A arma na mão do aliado, a distância, e a cor dele com a inicial.
@@ -114,11 +114,11 @@ Uma party para você e seus amigos. Convide-os e vocês veem a vida, a stamina, 
   - **F8** = modo de edição: arraste a barra de cima para mover, arraste um aliado para mudar a ordem, use a rodinha para mudar o tamanho, F8 de novo para terminar.
 - **Silhueta:** só as partes escondidas do aliado ficam coloridas; o que você vê diretamente fica normal. Estilo preenchido ou contorno; cor, opacidade e distância máxima configuráveis.
 - **Bússola:** com o [Nav Compass](https://thunderstore.io/c/valheim/p/Ab5oluteZer0/NavCompass/) instalado, cada aliado aparece na barra da bússola como um círculo na cor dele com a inicial. Dá para desligar, com distância máxima e tamanho do ícone.
-- **Chat de party:** digite `/p mensagem` (ou `/party mensagem`) no chat normal. Só a sua party vê, com a tag [Party] e a sua cor; também aparece embaixo do seu bloco no HUD deles por alguns segundos.
-  - **Abas do chat:** botões *All* e *Party* acima do chat. Na aba Party você só vê as mensagens da party e o que digita vai para ela. `/p` sozinho abre a aba Party; `/all` (ou `/a`) volta ao chat normal; `/all mensagem` volta e manda a mensagem para todos.
-- **Encontrar a party no mapa:** um botão para cada aliado no mapa grande. Clique num nome e o mapa se afasta, desliza até esse aliado e aproxima de novo, com um anel e o nome dele no meio, mesmo se ele estiver escondido no mapa. Um nome cinza (?) quer dizer que a posição dele ainda não é conhecida.
-- **Enviar itens:** com a bolsa aberta, passe o mouse num item e aperte **P**, depois escolha um membro da party por perto (30 m). Ele recebe um pedido **Y / N**, e o item só sai da sua bolsa quando ele aceita. Bolsa cheia recusa sozinha.
-- Se o líder sair ou cair, o próximo membro assume.
+- **Chat da guilda:** digite `/g mensagem` (`/p` e `/party` também funcionam) no chat normal. Só os membros da guilda que estão online veem, com a tag [Guild] e a sua cor; também aparece embaixo do seu bloco no HUD deles por alguns segundos.
+  - **Abas do chat:** botões *All* e *Guild* acima do chat. Na aba Guild você só vê as mensagens da guilda e o que digita vai para ela. `/g` (ou `/p`) sozinho abre a aba Guild; `/all` (ou `/a`) volta ao chat normal; `/all mensagem` volta e manda a mensagem para todos.
+- **Encontrar membros da guilda no mapa:** um botão para cada aliado online no mapa grande. Clique num nome e o mapa se afasta, desliza até esse aliado e aproxima de novo, com um anel e o nome dele no meio, mesmo se ele estiver escondido no mapa. Um nome cinza (?) quer dizer que a posição dele ainda não é conhecida.
+- **Enviar itens:** com a bolsa aberta, passe o mouse num item e aperte **P**, depois escolha um membro da guilda por perto (30 m). Ele recebe um pedido **Y / N**, e o item só sai da sua bolsa quando ele aceita. Bolsa cheia recusa sozinha.
+- **A guilda fica salva** em `BepInEx/config/Warband/guild.txt` no computador de cada membro. Quem estava offline recebe as mudanças (novos membros, remoções, novos cargos) quando encontra alguém da guilda. Líder e oficiais editam mesmo com o líder offline; se duas edições se chocam, vale a mais nova de cada membro. Parties da versão 1.x não são migradas.
 
 ### Requisitos
 

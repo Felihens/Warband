@@ -13,7 +13,7 @@ namespace Warband
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "1.4.0";
+        public const string VERSION = "2.0.0";
 
         internal static ManualLogSource Log;
 
@@ -66,30 +66,30 @@ namespace Warband
         {
             Log = Logger;
             PanelKey = Config.Bind("1 - Keys", "PanelKey", new KeyboardShortcut(KeyCode.P, KeyCode.LeftShift),
-                "Opens the party panel: everyone on the server, your friends and your party.");
+                "Opens the guild panel: everyone on the server, your friends and your guild.");
             InviteKey = Config.Bind("1 - Keys", "InviteKey", new KeyboardShortcut(KeyCode.J),
-                "Invites the player you are looking at to your party.");
+                "Invites the player you are looking at to your guild.");
             AcceptKey = Config.Bind("1 - Keys", "AcceptKey", new KeyboardShortcut(KeyCode.Y),
-                "Accepts a party invite.");
+                "Accepts a guild invite.");
             DeclineKey = Config.Bind("1 - Keys", "DeclineKey", new KeyboardShortcut(KeyCode.N),
-                "Declines a party invite.");
+                "Declines a guild invite.");
             SendKey = Config.Bind("1 - Keys", "SendItemKey", new KeyboardShortcut(KeyCode.P),
-                "With your bag open, hover an item and press this to send it to a party member nearby.");
+                "With your bag open, hover an item and press this to send it to a guild member nearby.");
             EditHudKey = Config.Bind("1 - Keys", "EditHudKey", new KeyboardShortcut(KeyCode.F8),
-                "Edit mode for the party HUD: drag it with the mouse, scroll to resize, press again to finish.");
+                "Edit mode for the guild HUD: drag it with the mouse, scroll to resize, press again to finish.");
 
             SendRange = Config.Bind("2 - Party", "SendItemRange", 30f,
-                new ConfigDescription("How close a party member must be to send them an item (metres).", new AcceptableValueRange<float>(2f, 100f)));
+                new ConfigDescription("How close a guild member must be to send them an item (metres).", new AcceptableValueRange<float>(2f, 100f)));
             AutoAcceptFriends = Config.Bind("2 - Party", "AutoAcceptFriends", false,
                 "Invites from players on your friends list are accepted on their own.");
             MaxMembers = Config.Bind("2 - Party", "MaxMembers", 10,
-                new ConfigDescription("Most players in one party (counting you).", new AcceptableValueRange<int>(2, 10)));
+                new ConfigDescription("Most players in one guild (counting you).", new AcceptableValueRange<int>(2, 10)));
 
             ShowHud = Config.Bind("3 - HUD", "Enabled", true, "Shows your allies' health, stamina, eitr, buffs and weapon.");
             HudPosition = Config.Bind("3 - HUD", "Position", new Vector2(20f, 330f),
-                "Top left corner of the party HUD, in pixels from the top left of the screen. Easier to set with the edit key.");
+                "Top left corner of the guild HUD, in pixels from the top left of the screen. Easier to set with the edit key.");
             HudScale = Config.Bind("3 - HUD", "Scale", 1f,
-                new ConfigDescription("Size of the party HUD.", new AcceptableValueRange<float>(0.5f, 2.5f)));
+                new ConfigDescription("Size of the guild HUD.", new AcceptableValueRange<float>(0.5f, 2.5f)));
             ShowStamina = Config.Bind("3 - HUD", "ShowStamina", true, "Stamina bar.");
             ShowEitr = Config.Bind("3 - HUD", "ShowEitr", true, "Eitr bar (only for allies who have eitr).");
             ShowBuffs = Config.Bind("3 - HUD", "ShowBuffs", true, "Active effects (rested, wet, mead, set bonus...).");
@@ -127,11 +127,11 @@ namespace Warband
                 new ConfigDescription("Size of the ally icon on the compass.", new AcceptableValueRange<float>(10f, 40f)));
 
             ChatColor = Config.Bind("6 - Chat", "Color", new Color(0.55f, 0.85f, 1f, 1f),
-                "Colour of party chat messages. Type /p and your message in the chat to talk to your party only.");
+                "Colour of guild chat messages. Type /g and your message in the chat to talk to your guild only.");
             ChatInHud = Config.Bind("6 - Chat", "ShowInHud", true,
-                "Also shows each ally's last message under their part of the party HUD for a few seconds.");
+                "Also shows each ally's last message under their part of the guild HUD for a few seconds.");
             ChatHudSeconds = Config.Bind("6 - Chat", "HudSeconds", 10f,
-                new ConfigDescription("How long a message stays in the party HUD.", new AcceptableValueRange<float>(2f, 60f)));
+                new ConfigDescription("How long a message stays in the guild HUD.", new AcceptableValueRange<float>(2f, 60f)));
 
             MapFindButton = Config.Bind("7 - Map", "FindPartyButton", true,
                 "A button for each ally on the large map: click a name and the map zooms out, glides to that ally and zooms back in.");
@@ -145,6 +145,7 @@ namespace Warband
             DetailedLog = Config.Bind("9 - Debug", "DetailedLog", false, "Writes details to the BepInEx log.");
 
             Friends.Load();
+            Guild.Load();
             new Harmony(GUID).PatchAll(typeof(Plugin).Assembly);
             Log.LogInfo(NAME + " " + VERSION + " loaded");
         }

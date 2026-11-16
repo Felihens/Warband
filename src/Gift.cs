@@ -114,7 +114,7 @@ namespace Warband
 
         private static void StartPicking(ItemDrop.ItemData item)
         {
-            if (!Party.InParty) { Plugin.Message("You are not in a party"); return; }
+            if (!Party.InParty) { Plugin.Message("You are not in a guild"); return; }
             Player me = Player.m_localPlayer;
             if (me.IsItemEquiped(item)) { Plugin.Message("Unequip the " + Label(item) + " first"); return; }
             _picking = item;
@@ -421,7 +421,7 @@ namespace Warband
                 ItemDrop.ItemData it = _picking;
                 if (it == null) return;
                 GUILayout.Label("Send " + Label(it) + " to:");
-                if (allies.Count == 0) GUILayout.Label("No one else is in your party.");
+                if (allies.Count == 0) GUILayout.Label("No one else from your guild is online.");
                 foreach (Member m in allies)
                 {
                     float d = Ui.Distance(m);

@@ -75,7 +75,7 @@ namespace Warband
             Editing = true;
             _editPos = Plugin.HudPosition.Value;
             _editScale = Plugin.HudScale.Value;
-            Plugin.Message("Party HUD: drag it, scroll to resize, " + Plugin.EditHudKey.Value + " to finish");
+            Plugin.Message("Guild HUD: drag it, scroll to resize, " + Plugin.EditHudKey.Value + " to finish");
         }
 
         private static void StopEditing()
@@ -534,7 +534,7 @@ namespace Warband
 
         private static void DrawPrompt()
         {
-            string text = Party.PendingFrom + " invited you to their party\n[" + Plugin.AcceptKey.Value + "] accept      [" + Plugin.DeclineKey.Value + "] decline";
+            string text = Party.PendingFrom + " invited you to the guild " + Party.PendingGuild + "\n[" + Plugin.AcceptKey.Value + "] accept      [" + Plugin.DeclineKey.Value + "] decline";
             Rect r = new Rect((Screen.width - 460) / 2f, Screen.height * 0.18f, 460, 56);
             Box(r, new Color(0f, 0f, 0f, 0.55f));
             Text(r, text, _prompt, new Color(1f, 0.9f, 0.6f));
@@ -551,24 +551,25 @@ namespace Warband
             if (Party.HasPendingInvite)
             {
                 GUILayout.BeginHorizontal(GUI.skin.box);
-                GUILayout.Label(Party.PendingFrom + " invited you to their party", _bold);
+                GUILayout.Label(Party.PendingFrom + " invited you to the guild " + Party.PendingGuild, _bold);
                 if (GUILayout.Button("Accept", GUILayout.Width(70))) Party.Accept();
                 if (GUILayout.Button("Decline", GUILayout.Width(70))) Party.Decline();
                 GUILayout.EndHorizontal();
             }
 
-            if (Party.InParty)
+            GuildData guild = Guild.Current;
+            if (Guild.Exists)
             {
-                Member lead = Party.Get(Party.Leader);
-                GUILayout.Label("Party: " + Party.Members.Count + " players, led by " + (Party.IsLeader ? "you" : (lead != null ? lead.Name : "?")));
+                GuildEntry lead = guild.Find(guild.LeaderId());
+                GUILayout.Label(guild.Name + ": " + guild.ActiveCount + " members, " + Party.Members.Count + " online, led by " + (Party.IsLeader ? "you" : (lead != null ? lead.Name : "?")));
             }
-            else GUILayout.Label("You are not in a party. Invite someone from the list, or look at them and press " + Plugin.InviteKey.Value + ".");
+            else GUILayout.Label("You are not in a guild. Invite someone from the list, or look at them and press " + Plugin.InviteKey.Value + ".");
 
-            _tab = GUILayout.Toolbar(_tab, new string[] { "Players (" + Party.OnlinePlayers.Count + ")", "Friends (" + Friends.List.Count + ")", "Party" });
+            _tab = GUILayout.Toolbar(_tab, new string[] { "Players (" + Party.OnlinePlayers.Count + ")", "Friends (" + Friends.List.Count + ")", "Guild" });
             _scroll = GUILayout.BeginScrollView(_scroll, GUILayout.ExpandHeight(true));
             if (_tab == 0) PlayersTab();
             else if (_tab == 1) FriendsTab();
-            else PartyTab();
+            else GuildTab();
             GUILayout.EndScrollView();
             GUILayout.Label(Plugin.PanelKey.Value + " or Esc closes this panel", _tinyLabel());
             GUI.DragWindow(new Rect(0, 0, 10000, 22));
@@ -597,9 +598,15 @@ namespace Warband
             return value;
         }
 
-        private static bool CanInvite(long peer)
+        private static bool InGuild(Party.Online o)
         {
-            return peer != 0 && !(Party.InParty && Party.Get(peer) != null) && Party.Members.Count < Plugin.MaxMembers.Value;
+            GuildEntry e = Guild.Exists ? Guild.Current.Find(o.UserId) : null;
+            return e != null && !e.Removed;
+        }
+
+        private static bool CanInvite(Party.Online o)
+        {
+            return o != null && o.Peer != 0 && o.UserId.Length > 0 && !InGuild(o) && Party.CanInvite && !Party.GuildFull;
         }
 
         private static void PlayersTab()
@@ -608,11 +615,11 @@ namespace Warband
             foreach (Party.Online o in Party.OnlinePlayers)
             {
                 bool friend = Friends.IsFriend(o.UserId, o.Name);
-                bool inParty = Party.IsAlly(o.Peer);
+                bool inParty = InGuild(o);
                 GUILayout.BeginHorizontal(GUI.skin.box);
-                GUILayout.Label((friend ? "* " : "") + o.Name + (inParty ? "   (in your party)" : ""), friend ? _bold : GUI.skin.label);
+                GUILayout.Label((friend ? "* " : "") + o.Name + (inParty ? "   (in your guild)" : ""), friend ? _bold : GUI.skin.label);
                 GUILayout.FlexibleSpace();
-                GUI.enabled = CanInvite(o.Peer);
+                GUI.enabled = CanInvite(o);
                 if (GUILayout.Button("Invite", GUILayout.Width(70))) Party.InviteTo(o.Peer, o.Name);
                 GUI.enabled = !friend;
                 if (GUILayout.Button(friend ? "Friend" : "Add friend", GUILayout.Width(90))) Friends.Add(o.UserId, o.Name);
@@ -651,7 +658,7 @@ namespace Warband
                 GUILayout.BeginHorizontal(GUI.skin.box);
                 GUILayout.Label(f.Name + (o != null ? "   (online)" : "   (offline)"), o != null ? _bold : GUI.skin.label);
                 GUILayout.FlexibleSpace();
-                GUI.enabled = o != null && CanInvite(o.Peer);
+                GUI.enabled = CanInvite(o);
                 if (GUILayout.Button("Invite", GUILayout.Width(70)) && o != null) Party.InviteTo(o.Peer, o.Name);
                 GUI.enabled = true;
                 if (GUILayout.Button("Remove", GUILayout.Width(70))) remove = f;
@@ -660,41 +667,88 @@ namespace Warband
             if (remove != null) Friends.Remove(remove);
         }
 
-        private static void PartyTab()
+        // A button that must be clicked twice (within 4 seconds) before it does anything.
+        private static string _confirmKey = "";
+        private static float _confirmAt;
+
+        private static bool ConfirmButton(string key, string label, float width)
         {
-            if (!Party.InParty) GUILayout.Label("No party yet.");
+            bool armed = _confirmKey == key && Time.unscaledTime - _confirmAt < 4f;
+            if (!GUILayout.Button(armed ? "Sure?" : label, GUILayout.Width(width))) return false;
+            if (armed) { _confirmKey = ""; return true; }
+            _confirmKey = key;
+            _confirmAt = Time.unscaledTime;
+            return false;
+        }
+
+        private static string _guildName = "";
+
+        private static void GuildTab()
+        {
+            GuildData g = Guild.Current;
+            if (!Guild.Exists) GUILayout.Label("No guild yet.");
             else
             {
-                long me = Party.Me;
-                long kick = 0, promote = 0;
-                foreach (Member m in Party.Members)
+                string me = Guild.MyId;
+                if (g.CanRename(me))
                 {
-                    GUILayout.BeginHorizontal(GUI.skin.box);
-                    string tag = (m.Peer == Party.Leader ? "  (leader)" : "") + (m.Peer == me ? "  (you)" : "");
-                    GUILayout.Label(m.Name + tag, m.Peer == Party.Leader ? _bold : GUI.skin.label);
-                    GUILayout.FlexibleSpace();
-                    if (Party.IsLeader && m.Peer != me)
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Rename:", GUILayout.Width(60));
+                    _guildName = GUILayout.TextField(_guildName, 32);
+                    GUI.enabled = GuildData.CleanName(_guildName).Length > 0;
+                    if (GUILayout.Button("Rename", GUILayout.Width(80)))
                     {
-                        if (GUILayout.Button("Make leader", GUILayout.Width(95))) promote = m.Peer;
-                        if (GUILayout.Button("Remove", GUILayout.Width(70))) kick = m.Peer;
+                        Party.Rename(_guildName);
+                        _guildName = "";
+                        GUIUtility.keyboardControl = 0;
+                    }
+                    GUI.enabled = true;
+                    GUILayout.EndHorizontal();
+                }
+
+                string kick = null, lead = null, officer = null;
+                bool makeOfficer = false;
+                foreach (GuildEntry e in g.Active())
+                {
+                    bool isMe = e.UserId == me;
+                    bool online = isMe || Party.GetByUser(e.UserId) != null;
+                    GuildRole role = g.RoleOf(e.UserId);
+                    string tag = (role == GuildRole.Leader ? "  [Leader]" : role == GuildRole.Officer ? "  [Officer]" : "")
+                        + (isMe ? "  (you)" : "") + (online ? "" : "  (offline)");
+                    GUILayout.BeginHorizontal(GUI.skin.box);
+                    Color old = GUI.color;
+                    if (!online) GUI.color = new Color(1f, 1f, 1f, 0.55f);
+                    GUILayout.Label(e.Name + tag, role == GuildRole.Leader ? _bold : GUI.skin.label);
+                    GUI.color = old;
+                    GUILayout.FlexibleSpace();
+                    if (!isMe)
+                    {
+                        if (g.CanSetOfficer(me, e.UserId) && GUILayout.Button(role == GuildRole.Officer ? "Demote" : "Promote", GUILayout.Width(80)))
+                        {
+                            officer = e.UserId;
+                            makeOfficer = role != GuildRole.Officer;
+                        }
+                        if (g.CanTransfer(me, e.UserId) && ConfirmButton("lead" + e.UserId, "Make leader", 95)) lead = e.UserId;
+                        if (g.CanRemove(me, e.UserId) && ConfirmButton("kick" + e.UserId, "Remove", 70)) kick = e.UserId;
                     }
                     GUILayout.EndHorizontal();
                 }
-                if (kick != 0) Party.Kick(kick);
-                if (promote != 0) Party.MakeLeader(promote);
-                if (GUILayout.Button("Leave party")) Party.Leave();
+                if (officer != null) Party.SetOfficer(officer, makeOfficer);
+                if (lead != null) Party.MakeLeader(lead);
+                if (kick != null) Party.Kick(kick);
+                if (ConfirmButton("leave", "Leave guild", 120)) Party.Leave();
             }
 
             GUILayout.Space(10);
             GUILayout.Label("Options", _bold);
             bool v;
-            v = Switch(Plugin.ShowHud.Value, "Party HUD (health, stamina, eitr, effects, weapon)");
+            v = Switch(Plugin.ShowHud.Value, "Guild HUD (health, stamina, eitr, effects, weapon)");
             if (v != Plugin.ShowHud.Value) Plugin.ShowHud.Value = v;
             v = Switch(Plugin.SilhouetteEnabled.Value, "See allies through walls (silhouette)");
             if (v != Plugin.SilhouetteEnabled.Value) Plugin.SilhouetteEnabled.Value = v;
             v = Switch(Plugin.CompassEnabled.Value, "Allies on the compass");
             if (v != Plugin.CompassEnabled.Value) Plugin.CompassEnabled.Value = v;
-            if (GUILayout.Button("Move / resize the party HUD (" + Plugin.EditHudKey.Value + ")"))
+            if (GUILayout.Button("Move / resize the guild HUD (" + Plugin.EditHudKey.Value + ")"))
             {
                 PanelOpen = false;
                 StartEditing();
