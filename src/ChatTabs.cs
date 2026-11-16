@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 namespace Warband
 {
-    // Two tabs above the chat: "All" (everything, as before) and "Party" (only party messages). While the Party
-    // tab is open, what you type goes to the party without /p. Commands that start with / still work as usual.
-    // Typing /p alone opens the Party tab, /all (or /a) goes back to All; "/all text" goes back and sends it to everyone.
+    // Two tabs above the chat: "All" (everything, as before) and "Guild" (only guild messages). While the Guild
+    // tab is open, what you type goes to the guild without /g. Commands that start with / still work as usual.
+    // Typing /g (or /p) alone opens the Guild tab, /all (or /a) goes back to All; "/all text" goes back and sends it to everyone.
     [HarmonyPatch]
     internal static class ChatTabs
     {
@@ -20,7 +20,7 @@ namespace Warband
 
         internal static bool IsPartyLine(string line)
         {
-            return line != null && (line.Contains(">[Party]</color>") || line.StartsWith("<color=#ffcc66>"));
+            return line != null && (line.Contains(">[Guild]</color>") || line.StartsWith("<color=#ffcc66>"));
         }
 
         internal static void Set(bool party) { Set(party, false); }
@@ -30,7 +30,7 @@ namespace Warband
             bool changed = PartyTab != party;
             PartyTab = party;
             if (say && changed && Chat.instance != null)
-                Chat.instance.AddString(party ? "<color=#ffcc66>Party chat: what you type goes to your party. /all to go back.</color>"
+                Chat.instance.AddString(party ? "<color=#ffcc66>Guild chat: what you type goes to your guild. /all to go back.</color>"
                                               : "<color=#ffcc66>All chat: what you type goes to everyone.</color>");
             Chat chat = Chat.instance;
             if (chat == null) return;
@@ -56,7 +56,7 @@ namespace Warband
             int shown = 0;
             for (int i = buf.Count - 1; i >= 0 && shown < 40; i--)
                 if (IsPartyLine(buf[i])) { sb.Insert(0, buf[i] + "\n"); shown++; }
-            if (shown == 0) sb.Append("<color=#ffcc66>Party tab: what you type goes to your party. /all to go back.</color>\n");
+            if (shown == 0) sb.Append("<color=#ffcc66>Guild tab: what you type goes to your guild. /all to go back.</color>\n");
             __instance.m_output.text = sb.ToString();
             return false;
         }
@@ -72,10 +72,10 @@ namespace Warband
             if (chat == null || chat.m_chatWindow == null || _failed) return;
             if (!_helped && Player.m_localPlayer != null)
             {
-                // once per session, in the chat: how to switch between party and normal chat
+                // once per session, in the chat: how to switch between guild and normal chat
                 _helped = true;
-                chat.AddString("<color=#ffcc66>Shieldmates chat: /p switches to party chat, /all (or /a) back to normal chat. "
-                    + "\"/p message\" sends one message to the party, \"/all message\" goes back and sends it to everyone. Or click the All / Party tabs.</color>");
+                chat.AddString("<color=#ffcc66>Shieldmates chat: /g (or /p) switches to guild chat, /all (or /a) back to normal chat. "
+                    + "\"/g message\" sends one message to the guild, \"/all message\" goes back and sends it to everyone. Or click the All / Guild tabs.</color>");
             }
             try
             {
@@ -101,7 +101,7 @@ namespace Warband
             r.pivot = new Vector2(0f, 0f);
             r.sizeDelta = new Vector2(170f, 26f);
             _allBg = Tab(r, chat, "All", 0f, false);
-            _partyBg = Tab(r, chat, "Party", 84f, true);
+            _partyBg = Tab(r, chat, "Guild", 84f, true);
             Paint();
             Plugin.Log.LogInfo("[chat] tabs placed above " + chat.m_chatWindow.name + " (under " + parent.name + ")");
         }

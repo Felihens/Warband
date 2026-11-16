@@ -62,6 +62,14 @@ namespace Warband
             return null;
         }
 
+        // Only by platform id: a name can be typed by anyone.
+        internal static bool IsFriendId(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return false;
+            foreach (Friend f in List) if (f.Id == id) return true;
+            return false;
+        }
+
         internal static bool IsFriend(string id, string name)
         {
             return Find(id, name) != null;

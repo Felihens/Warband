@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0
+- **Parties are now guilds, and they last.** The group is saved on each member's computer (`BepInEx/config/Warband/guild.txt`). When a member comes back to the game, or you change world or server, the guild is together again without a new invite.
+- **As parties agora são guildas, e duram.** O grupo é salvo no computador de cada membro (`BepInEx/config/Warband/guild.txt`). Quando um membro volta ao jogo, ou você troca de mundo ou servidor, a guilda se junta de novo sem novo convite.
+- Roles: **leader**, **officer** and **member**. Leader and officers can invite; officers remove plain members; only the leader promotes officers, removes officers, hands over the lead and renames the guild. Everyone can leave. The guild can be edited while the leader is offline: copies are merged member by member when guild members meet, so two officers inviting different people never overwrite each other, and someone removed while offline learns it when they return.
+- Cargos: **líder**, **oficial** e **membro**. Líder e oficiais convidam; oficiais removem membros comuns; só o líder promove oficiais, remove oficiais, passa a liderança e renomeia a guilda. Todos podem sair. A guilda pode ser editada com o líder offline: as cópias se unem membro a membro quando os da guilda se encontram, então dois oficiais convidando pessoas diferentes não se sobrescrevem, e quem foi removido offline fica sabendo quando volta.
+- The Guild tab of the panel lists every member, online or offline, with buttons for what your role allows; Remove, Make leader and Leave ask for a second click. The HUD, silhouettes, compass, map buttons, chat and item sending work as before, for the members who are online.
+- A aba Guild do painel lista todos os membros, online ou offline, com os botões que o seu cargo permite; Remover, Passar liderança e Sair pedem um segundo clique. O HUD, as silhuetas, a bússola, os botões do mapa, o chat e o envio de itens funcionam como antes, para os membros online.
+- Chat: `/g` and the **Guild** tab (`/p` and `/party` still work).
+- Chat: `/g` e a aba **Guild** (`/p` e `/party` continuam funcionando).
+- **Everyone in the guild must update together:** 2.0.0 does not talk to 1.x. Parties from 1.x are not carried over (they were never saved).
+- **Todos da guilda precisam atualizar juntos:** a 2.0.0 não conversa com a 1.x. Parties da 1.x não são migradas (elas nunca eram salvas).
+
 ## 1.4.0
 - Chat tabs: **All** and **Party** buttons above the chat. In the Party tab you only see party messages, and what you type goes straight to the party, no `/p` needed. `/p` alone opens the Party tab; `/all` (or `/a`) goes back; `/p message` and `/all message` send a single message. The chat explains these commands once per session.
 - Abas no chat: botões **All** e **Party** acima do chat. Na aba Party você só vê as mensagens da party, e o que você digita vai direto para a party, sem `/p`. `/p` sozinho abre a aba Party; `/all` (ou `/a`) volta; `/p mensagem` e `/all mensagem` mandam uma mensagem só. O chat explica esses comandos uma vez por sessão.
