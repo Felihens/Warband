@@ -13,7 +13,7 @@ namespace Warband
     {
         public const string GUID = "felih.Warband";
         public const string NAME = "Warband";
-        public const string VERSION = "2.0.0";
+        public const string VERSION = "2.0.1";
 
         internal static ManualLogSource Log;
 

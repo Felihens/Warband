@@ -141,10 +141,11 @@ namespace Warband
 
         private static void Styles()
         {
-            if (_stylesReady) return;
+            if (_stylesReady && _white != null) return;
             _white = new Texture2D(1, 1);
             _white.SetPixel(0, 0, Color.white);
             _white.Apply();
+            _white.hideFlags = HideFlags.HideAndDontSave;
             foreach (Font f in Resources.FindObjectsOfTypeAll<Font>())
                 if (f.name == "AveriaSerifLibre-Bold") { _font = f; break; }
             _name = new GUIStyle(GUI.skin.label);

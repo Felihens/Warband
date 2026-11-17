@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+- The guild window no longer loses its background after a while.
+- A janela da guilda não perde mais o fundo depois de um tempo.
+
 ## 2.0.0
 - **Parties are now guilds, and they last.** The group is saved on each member's computer (`BepInEx/config/Warband/guild.txt`). When a member comes back to the game, or you change world or server, the guild is together again without a new invite.
 - **As parties agora são guildas, e duram.** O grupo é salvo no computador de cada membro (`BepInEx/config/Warband/guild.txt`). Quando um membro volta ao jogo, ou você troca de mundo ou servidor, a guilda se junta de novo sem novo convite.
